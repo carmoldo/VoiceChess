@@ -1,18 +1,18 @@
 #pragma once
-
-#include <iostream>
+//#include <iostream>
 #include <cmath>
 #include <string>
+#include <Arduino.h> // Agrega la biblioteca de Arduino
 
 enum Piece { KING, QUEEN, BISHOP, KNIGHT, ROOK, PAWN, EMPTY };
 enum Color { WHITE, BLACK, NONE };
 
 class Square
 {
-  
   Piece piece;
   Color color;
   int x, y;
+
 public:
   void setSpace(Square*);
   void setEmpty();
@@ -29,7 +29,8 @@ public:
 class Board
 {
   Square square[8][8];
-  Color turn=WHITE;
+  Color turn = WHITE;
+
   bool moveKing(Square* thisKing, Square* thatSpace);
   bool moveQueen(Square* thisQueen, Square* thatSpace);
   bool moveBishop(Square* thisBishop, Square* thatSpace);
@@ -38,15 +39,11 @@ class Board
   bool movePawn(Square* thisPawn, Square* thatSpace);
   bool makeMove(int x1, int y1, int x2, int y2);
   void printBoard();
+
 public:
-  Square* getSquare(int x, int y) {
-    return &square[x][y];
-  }
-  void setSquare(Square * s, int x, int y){
-    square[x][y]=*s;
-  }
+  Square* getSquare(int x, int y);
+  void setSquare(Square* s, int x, int y);
   bool doMove();
-  
   void setBoard();
   bool playGame();
 };
