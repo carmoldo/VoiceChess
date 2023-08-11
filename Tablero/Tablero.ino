@@ -1,19 +1,5 @@
-void setup() {
-  // put your setup code here, to run once:
 
-}
-
-void loop() {
-  // put your main code here, to run repeatedly:
-
-}
-
-/*
-Funciones pendientes:
--   SI EL MOVIMIENTO ES VALIDO O NO.
--   EL MOVIMIENTO DE ELIMINACION.
--   CHANGELED();
-*/
+#include chess.h /es decir, donde estan las definiciones de el square
 #include <iostream>
 #include <string>
 using namespace std;
