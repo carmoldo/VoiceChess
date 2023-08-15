@@ -4,6 +4,7 @@
 using namespace std;
 
 // CREO LA ESTRUCTURA COMANDO
+// RAMIRO CON SU PROGRAMACION ME VA A PASAR EL COMANDO.
 struct Comando {
     piece = EMPTY;
     color = NONE;
@@ -152,12 +153,6 @@ void Board::setBoard()
       square[i][j].setY(j);
     }
 
-}
-
-// ACA ES EL COMO EL LOOP QUE VA A ESTAR CONSTANTEMENTE FUNCIONANDO EN EL JUEGO
-bool Board::playGame()
-{
-  return doMove();
 }
 
 // ACA LOS MOV. DE LAS PIEZAS
@@ -453,5 +448,49 @@ bool Board::makeMove(int x1, int y1, int x2, int y2) {
   }
   return false;
 }
+
+
+// AGREGO FUNCION MOVIMIENTO
+void Board::Movimiento(Square* src, Square* dest) {
+    int srcX = src->getX();
+    int srcY = src->getY();
+    int destX = dest->getX();
+    int destY = dest->getY();
+
+    int xDiff = destX - srcX;
+    int yDiff = destY - srcY;
+
+    // Movimiento hacia arriba
+    if (xDiff == 0 && yDiff > 0) {
+        for (int i = srcY + 1; i <= destY; i++) {
+            MoverSquareArriba(src, getSquare(srcX, i));
+        }
+    }
+    // Movimiento hacia abajo
+    else if (xDiff == 0 && yDiff < 0) {
+        for (int i = srcY - 1; i >= destY; i--) {
+            MoverSquareAbajo(src, getSquare(srcX, i));
+        }
+    }
+    // Movimiento hacia la derecha
+    else if (xDiff > 0 && yDiff == 0) {
+        for (int i = srcX + 1; i <= destX; i++) {
+            MoverSquareDerecha(src, getSquare(i, srcY));
+        }
+    }
+    // Movimiento hacia la izquierda
+    else if (xDiff < 0 && yDiff == 0) {
+        for (int i = srcX - 1; i >= destX; i--) {
+            MoverSquareIzquierda(src, getSquare(i, srcY));
+        }
+    }
+    // ... (otras direcciones y movimientos)
+
+    // Aquí puedes agregar lógica adicional para otras direcciones de movimiento
+}
+
+
+
+
 
 }
