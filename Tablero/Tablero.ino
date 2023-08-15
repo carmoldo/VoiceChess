@@ -160,7 +160,6 @@ bool Board::playGame()
   return doMove();
 }
 
-
 // ACA LOS MOV. DE LAS PIEZAS
 
 bool Board::moveKing(Square* thisKing, Square* thatSpace) {
