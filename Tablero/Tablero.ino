@@ -484,13 +484,6 @@ void Board::Movimiento(Square* src, Square* dest) {
             MoverSquareIzquierda(src, getSquare(i, srcY));
         }
     }
-    // ... (otras direcciones y movimientos)
-
-    // Aquí puedes agregar lógica adicional para otras direcciones de movimiento
 }
-
-
-
-
 
 }
