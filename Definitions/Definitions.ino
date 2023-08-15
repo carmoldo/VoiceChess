@@ -39,12 +39,12 @@ class Board
   bool moveRook(Square* thisRook, Square* thatSpace);
   bool movePawn(Square* thisPawn, Square* thatSpace);
   bool makeMove(int x1, int y1, int x2, int y2);
-  void printBoard();
+//  void printBoard();
 
 public:
   Square* getSquare(int x, int y);
   void setSquare(Square* s, int x, int y);
   bool doMove();
-  void setBoard();
-  bool playGame();
+//  void setBoard();
+//  bool playGame();
 };
