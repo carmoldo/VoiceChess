@@ -1,7 +1,6 @@
 #include "../PlayGame/PlayGame.IDE"
 
 void setup() {
-  // put your setup code here, to run once:
   setBoard();
 }
 

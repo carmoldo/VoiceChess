@@ -1,51 +1,59 @@
-#include "../Definitions/Definitions.IDE"
-#include <iostream>
-#include <string>
+//#include "C:\Users\47696443\Desktop\VoiceChess\Definitions\Definitions.h"
+//#include <iostream>
+//#include <string>
 using namespace std;
 
-// CREO LA ESTRUCTURA COMANDO
-// RAMIRO CON SU PROGRAMACION ME VA A PASAR EL COMANDO.
+// -------- estructura comando
 struct Comando {
-    piece = EMPTY;
-    color = NONE;
-    int numerodestino;
-    char letradestino;
-    int numeroinicio;
-    char letrainicio;
+  piece = EMPTY;
+  color = NONE;
+  int numerodestino;
+  char letradestino;
+  int numeroinicio;
+  char letrainicio;
 };
 
-// CREO LA ESTRUCTURA SQUARE (CON PIECE Y COLOR)
+// -------- estructura square
 Square::Square()
 {
   piece = EMPTY;
   color = NONE;
 }
 
-// ESTA FUNCION SE USA CUANDO QUIERO PASAR EL VALOR DEL COLOR Y LA PIECE A OTRA CASILLA
+// -------- funcion setSpace de Square
 void Square::setSpace(Square* space)
 {
+  // ESTA FUNCION SE USA CUANDO QUIERO PASAR EL VALOR DEL COLOR Y LA PIECE A OTRA CASILLA
   color = space->getColor(); // Copia el color del objeto 'space' al color de esta instancia
   piece = space->getPiece(); // Copia la pieza del objeto 'space' a la pieza de esta instancia
 }
 
-// COPIA EL VALOR COLOR Y PIECE DE SPACE AL DE ESTA INSTANCIA
-Piece Square::getPiece(){  return piece;}
-Color Square::getColor(){  return color;}
+// -------- funcion gePiece de Piece Square
+Piece Square::getPiece()
+{
+  // COPIA EL VALOR COLOR Y PIECE DE SPACE AL DE ESTA INSTANCIA
+  return piece;
+}
+Color Square::getColor() {
+  return color;
+}
 
-
+// -------- funcion setEmpty de Square
 void Square::setEmpty()
 {
   color = NONE;
   piece = EMPTY;
 }
 
-//PARA ESTABLECER LUEGO LOS VALORES DE LAS FICHAS
+
+// -------- funcion setSPieceAndColor
 void Square::setPieceAndColor(Piece p, Color c)
 {
   piece = p;
   color = c;
 }
 
+// -------- funcion doMove
 bool Board::doMove() {
   using namespace std;
   Comando comando;
@@ -58,24 +66,24 @@ bool Board::doMove() {
     int x2 = comando.letradestino - 'A' + 1;
     int y2 = comando.numerodestino;
 
-    // Aquí se verifica si el color de la casilla de origen coincide con el turno actual del jugador. 
+    // Aquí se verifica si el color de la casilla de origen coincide con el turno actual del jugador.
     // Si es así, se intenta realizar el movimiento utilizando la función makeMove(). Si el movimiento es inválido, se imprime un mensaje de error.
     // Si el movimiento es válido, se marca stop como true para salir del bucle y se procede al siguiente paso.
     if (getSquare(x1, y1)->getColor() == turn)
     {
       if (makeMove(x1, y1, x2, y2) == false)
       {
-        // Serial.println("Invalid move, try again.");
-        // COMO ACA, EL MOV ES INVALIDO (ES DECIR MOVI AL CABALLO COMOPEON, ETC), TENGO QUE REINICIAR EL COMAND. 
+        // MOV INVALIDO (ES DECIR MOVI AL CABALLO COMOPEON, ETC).
+        return doMove;
       }
-      else 
+      else
       {
         stop = true;
       }
     }
-    else 
+    else
     {
-      //Serial.println("That's not your piece. Try again.");
+      return doMove;
       // ACA ES CUANDO GETCOLOR() == TURN ESTA MAL, OSEA ESTAS AGARRAN UNA PIECE NO TUYA
     }
   }
@@ -86,35 +94,35 @@ bool Board::doMove() {
     if (getSquare(x1, y1)->getColor() == WHITE)
     {
       // Serial.println("WHITE WINS");
-      //return false;
+      return setBoard;
       // GANA EL BLANCO Y SE REINICIA EL JUEGO
     }
     else
     {
       //Serial.println("BLACK WINS");
-      // return false;
+      return setBoard;
       // GANA EL NEGRO Y SE REINICIA EL JUEGO
     }
   }
 
-// CAMBIA DE QUIEN ES EL TURNO
-  if (turn == BLACK) 
-  {    
+  // CAMBIA DE QUIEN ES EL TURNO
+  if (turn == BLACK)
+  {
     turn = WHITE;
   }
   else
   {
     turn = BLACK;
-   }
+  }
 
-// ESTE RETURN TRUE ES MAS QUE NADA PARA VERIFICAR QUE DOMOVE == TRUE Y QUE FUNCIONA BIEN
+  // ESTE RETURN TRUE ES MAS QUE NADA PARA VERIFICAR QUE DOMOVE == TRUE Y QUE FUNCIONA BIEN
   return true;
 }
 
-
-// ESTABLECE LOS VALORES DE LAS FICHAS EN CADA CUADRADO
+// -------- funcion setBoard
 void Board::setBoard()
 {
+  // ESTABLECE LOS VALORES DE LAS FICHAS EN CADA CUADRADO
   square[0][0].setPieceAndColor(TORRE, WHITE);
   square[1][0].setPieceAndColor(CABALLO, WHITE);
   square[2][0].setPieceAndColor(ALFIL, WHITE);
@@ -142,7 +150,7 @@ void Board::setBoard()
   for (int i = 2; i < 6; i++)
   {
     for (int j = 0; j < 8; j++)
-    square[j][i].setPieceAndColor(EMPTY, NONE);
+      square[j][i].setPieceAndColor(EMPTY, NONE);
   }
 
   // ESTABLECE LAS COORDENADAS X E Y DE CADA SQUARE, ETC
@@ -155,25 +163,23 @@ void Board::setBoard()
 
 }
 
-// ACA LOS MOV. DE LAS PIEZAS
-
+// -------- funcion moveKing
 bool Board::moveKing(Square* thisKing, Square* thatSpace) {
   //off board inputs should be handled elsewhere (before this)
   //squares with same color should be handled elsewhere (before this)
-  
-  if (abs(thatSpace->getX() - thisKing->getX()) == 1){
+  if (abs(thatSpace->getX() - thisKing->getX()) == 1)
     if (abs(thatSpace->getY() - thisKing->getY()) == 1)
     {
       thatSpace->setSpace(thisKing);
       thisKing->setEmpty();
       return true;
     }
-    else { return false;}
-  }
-  else { return false;}
-   
-bool Board::moveQueen(Square* thisQueen, Square* thatSpace) { 
-  //there might be problems with numbers of brackets
+    else return false;
+  else return false;
+}
+
+// -------- funcion moveQueen
+bool Board::moveQueen(Square* thisQueen, Square* thatSpace) { //there might be problems with numbers of brackets
   //off board inputs should be handled elsewhere (before this)
   //squares with same color should be handled elsewhere (before this)
 
@@ -181,7 +187,7 @@ bool Board::moveQueen(Square* thisQueen, Square* thatSpace) {
   int queenY = thisQueen->getY();
   int thatX = thatSpace->getX();
   int thatY = thatSpace->getY();
-//  std::cout << "this";
+  std::cout << "this";
   int yIncrement;
   int xIncrement;
 
@@ -200,35 +206,35 @@ bool Board::moveQueen(Square* thisQueen, Square* thatSpace) {
 
       }
     }
-    else
-      if (queenY == thatY)
+    else if (queenY == thatY)
+    {
+
+      xIncrement = (thatX - queenX) / (abs(thatX - queenX));
+      for (int i = queenX + xIncrement; i != thatX; i += xIncrement)
       {
-
-        xIncrement = (thatX - queenX) / (abs(thatX - queenX));
-        for (int i = queenX + xIncrement; i != thatX; i += xIncrement)
-        {
-          if (square[i][thatY].getColor() != NONE)
-            return false;
-        }
-      }
-      else
-        if (abs(queenX - thatX) == abs(queenY - thatY))
-        {
-          xIncrement = (thatX - queenX) / (abs(thatX - queenX));
-          yIncrement = (thatY - queenY) / (abs(thatY - queenY));
-
-          for (int i = 1; i < abs(queenX - thatX); i++)
-          {
-//            std::cout << "It got here somehow";
-            if (square[queenX + xIncrement*i][queenY + yIncrement*i].getColor() != NONE)
-              return false;
-
-          }
-        }
-        else
+        if (square[i][thatY].getColor() != NONE)
           return false;
+      }
+    }
+    else if (abs(queenX - thatX) == abs(queenY - thatY))
+    {
+      xIncrement = (thatX - queenX) / (abs(thatX - queenX));
+      yIncrement = (thatY - queenY) / (abs(thatY - queenY));
+
+      for (int i = 1; i < abs(queenX - thatX); i++)
+      {
+        std::cout << "It got here somehow";
+        if (square[queenX + xIncrement * i][queenY + yIncrement * i].getColor() != NONE)
+          return false;
+
+      }
+    }
+    else
+      return false;
     //if()
   }
+
+
 
   if (invalid == false)
   {
@@ -242,9 +248,8 @@ bool Board::moveQueen(Square* thisQueen, Square* thatSpace) {
   }
 }
 
-bool Board::moveBishop(Square* thisBishop, Square* thatSpace) { 
-  //there might be problems with number of brackets
-  
+// -------- funcion moveBishop
+bool Board::moveBishop(Square* thisBishop, Square* thatSpace) { //there might be problems with number of brackets
   int bishopX = thisBishop->getX();
   int bishopY = thisBishop->getY();
   int thatX = thatSpace->getX();
@@ -258,8 +263,8 @@ bool Board::moveBishop(Square* thisBishop, Square* thatSpace) {
 
     for (int i = 1; i < abs(bishopX - thatX); i++)
     {
-//      std::cout << "It got here somehow";
-      if (square[bishopX + xIncrement*i][bishopY + yIncrement*i].getColor() != NONE)
+      std::cout << "It got here somehow";
+      if (square[bishopX + xIncrement * i][bishopY + yIncrement * i].getColor() != NONE)
         return false;
 
     }
@@ -278,6 +283,8 @@ bool Board::moveBishop(Square* thisBishop, Square* thatSpace) {
     return false;
   }
 }
+
+// -------- funcion moveKnight
 bool Board::moveKnight(Square* thisKnight, Square* thatSpace)
 {
   //off board inputs should be handled elsewhere (before this)
@@ -299,6 +306,7 @@ bool Board::moveKnight(Square* thisKnight, Square* thatSpace)
   }
 }
 
+// -------- funcion moveRook
 bool Board::moveRook(Square* thisRook, Square* thatSpace)
 {
   //off board inputs should be handled elsewhere (before this)
@@ -322,19 +330,18 @@ bool Board::moveRook(Square* thisRook, Square* thatSpace)
 
       }
     }
-    else
-      if (rookY == thatY)
-      {
+    else if (rookY == thatY)
+    {
 
-        int xIncrement = (thatX - rookX) / (abs(thatX - rookX));
-        for (int i = rookX + xIncrement; i != thatX; i += xIncrement)
-        {
-          if (square[i][thatY].getColor() != NONE)
-            return false;
-        }
+      int xIncrement = (thatX - rookX) / (abs(thatX - rookX));
+      for (int i = rookX + xIncrement; i != thatX; i += xIncrement)
+      {
+        if (square[i][thatY].getColor() != NONE)
+          return false;
       }
-      else
-        return false;
+    }
+    else
+      return false;
   }
   if (invalid == false)
   {
@@ -343,12 +350,13 @@ bool Board::moveRook(Square* thisRook, Square* thatSpace)
     return true;
   }
   else
-  {//Return some erorr or something. Probably return false;
-//    std::cout << "That is an invalid move for rook";
+  { //Return some erorr or something. Probably return false;
+    std::cout << "That is an invalid move for rook";
     return false;
   }
 }
 
+// -------- funcion movePawn
 bool Board::movePawn(Square* thisPawn, Square* thatSpace) {
   //off board inputs should be handled elsewhere (before this)
   //squares with same color should be handled elsewhere (before this)
@@ -369,45 +377,42 @@ bool Board::movePawn(Square* thisPawn, Square* thatSpace) {
       thisPawn->setEmpty();
       return true;
     }
-    else
-      if ((pawnX + 1 == thatX || pawnX - 1 == thatX) && pawnY + 1 == thatY  && thatSpace->getColor() == BLACK)
-      {
-        thatSpace->setSpace(thisPawn);
-        thisPawn->setEmpty();
-        return true;
-      }
-      else
-        return false;
-  }
-  else
-    if (thisPawn->getColor() == BLACK)
+    else if ((pawnX + 1 == thatX || pawnX - 1 == thatX) && pawnY + 1 == thatY  && thatSpace->getColor() == BLACK)
     {
-      if (pawnX == thatX && thatY == pawnY - 1 && thatSpace->getColor() == NONE)
-      {
-        thatSpace->setSpace(thisPawn);
-        thisPawn->setEmpty();
-        return true;
-      }
-      else
-        if ((pawnX + 1 == thatX || pawnX - 1 == thatX) && pawnY - 1 == thatY  && thatSpace->getColor() == WHITE)
-        {
-          thatSpace->setSpace(thisPawn);
-          thisPawn->setEmpty();
-          return true;
-        }
-        else
-          return false;
+      thatSpace->setSpace(thisPawn);
+      thisPawn->setEmpty();
+      return true;
     }
     else
       return false;
+  }
+  else if (thisPawn->getColor() == BLACK)
+  {
+    if (pawnX == thatX && thatY == pawnY - 1 && thatSpace->getColor() == NONE)
+    {
+      thatSpace->setSpace(thisPawn);
+      thisPawn->setEmpty();
+      return true;
+    }
+    else if ((pawnX + 1 == thatX || pawnX - 1 == thatX) && pawnY - 1 == thatY  && thatSpace->getColor() == WHITE)
+    {
+      thatSpace->setSpace(thisPawn);
+      thisPawn->setEmpty();
+      return true;
+    }
+    else
+      return false;
+  }
+  else
+    return false;
 }
 
-
+// -------- funcion makeMove
 bool Board::makeMove(int x1, int y1, int x2, int y2) {
   //Checking for turns will be done previous to this (XQ SE VAN A HACER EN DOMOVE)
   using namespace std;
-  
-  if (x1 < 0 || x1>7 || y1 < 0 || y1>7 || x2 < 0 || x2>7 || y2 < 0 || y2>8)
+
+  if (x1 < 0 || x1 > 7 || y1 < 0 || y1 > 7 || x2 < 0 || x2 > 7 || y2 < 0 || y2 > 8)
   {
     // std::cout << "One of your inputs was our of bounds" << std::endl;
     // ACA SE FIJA SI LAS COORDENADAS ESTAN BIEN, Y QUENO HAYA NINGUNA Q SEA, X EJEPLO, 9.
@@ -426,64 +431,24 @@ bool Board::makeMove(int x1, int y1, int x2, int y2) {
 
   switch (src->getPiece())
   {
-  case KING: return moveKing(src, dest);
-    break;
-  case QUEEN: return moveQueen(src, dest);
-    break;
-  case BISHOP: return moveBishop(src, dest);
-    break;
-  case KNIGHT: return moveKnight(src, dest);
-    break;
-  case ROOK: return moveRook(src, dest);
-    break;
-  case PAWN: return movePawn(src, dest);
-    break;
-
+    case KING: return moveKing(src, dest);
+      break;
+    case QUEEN: return moveQueen(src, dest);
+      break;
+    case BISHOP: return moveBishop(src, dest);
+      break;
+    case KNIGHT: return moveKnight(src, dest);
+      break;
+    case ROOK: return moveRook(src, dest);
+      break;
+    case PAWN: return movePawn(src, dest);
+      break;
     // ACA ES CUANDO NO HAY NINGUNA CASILLA ALLI
-  case EMPTY: std::cout << "You do not have a piece there" << std::endl;  return false;
-    break;
+    case EMPTY: std::cout << "You do not have a piece there" << std::endl;  return false;
+      break;
     //ACA ES CUANDO... NO ES CASE NINGUNA DE LAS ANTERIORES
-  default: std::cerr << "Something went wrong in the switch statement in makeMove()" << std::endl;
-    break;
+    default: std::cerr << "Something went wrong in the switch statement in makeMove()" << std::endl;
+      break;
   }
   return false;
-}
-
-
-// AGREGO FUNCION MOVIMIENTO
-void Board::Movimiento(Square* src, Square* dest) {
-    int srcX = src->getX();
-    int srcY = src->getY();
-    int destX = dest->getX();
-    int destY = dest->getY();
-
-    int xDiff = destX - srcX;
-    int yDiff = destY - srcY;
-
-    // Movimiento hacia arriba
-    if (xDiff == 0 && yDiff > 0) {
-        for (int i = srcY + 1; i <= destY; i++) {
-            MoverSquareArriba(src, getSquare(srcX, i));
-        }
-    }
-    // Movimiento hacia abajo
-    else if (xDiff == 0 && yDiff < 0) {
-        for (int i = srcY - 1; i >= destY; i--) {
-            MoverSquareAbajo(src, getSquare(srcX, i));
-        }
-    }
-    // Movimiento hacia la derecha
-    else if (xDiff > 0 && yDiff == 0) {
-        for (int i = srcX + 1; i <= destX; i++) {
-            MoverSquareDerecha(src, getSquare(i, srcY));
-        }
-    }
-    // Movimiento hacia la izquierda
-    else if (xDiff < 0 && yDiff == 0) {
-        for (int i = srcX - 1; i >= destX; i--) {
-            MoverSquareIzquierda(src, getSquare(i, srcY));
-        }
-    }
-}
-
 }

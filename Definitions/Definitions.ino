@@ -31,7 +31,6 @@ class Board
 {
   Square square[8][8];
   Color turn = WHITE;
-
   bool moveKing(Square* thisKing, Square* thatSpace);
   bool moveQueen(Square* thisQueen, Square* thatSpace);
   bool moveBishop(Square* thisBishop, Square* thatSpace);
@@ -45,6 +44,6 @@ public:
   Square* getSquare(int x, int y);
   void setSquare(Square* s, int x, int y);
   bool doMove();
-//  void setBoard();
-//  bool playGame();
+  void setBoard();
+  bool playGame();
 };
