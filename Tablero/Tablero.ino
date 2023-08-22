@@ -122,46 +122,54 @@ bool Board::doMove() {
 // -------- funcion setBoard
 void Board::setBoard()
 {
-  // ESTABLECE LOS VALORES DE LAS FICHAS EN CADA CUADRADO
-  square[0][0].setPieceAndColor(TORRE, WHITE);
-  square[1][0].setPieceAndColor(CABALLO, WHITE);
-  square[2][0].setPieceAndColor(ALFIL, WHITE);
-  square[3][0].setPieceAndColor(REINA, WHITE);
-  square[4][0].setPieceAndColor(REY, WHITE);
-  square[5][0].setPieceAndColor(ALFIL, WHITE);
-  square[6][0].setPieceAndColor(CABALLO, WHITE);
-  square[7][0].setPieceAndColor(TORRE, WHITE);
-
-  square[0][7].setPieceAndColor(TORRE, BLACK);
-  square[1][7].setPieceAndColor(CABALLO, BLACK);
-  square[2][7].setPieceAndColor(ALFIL, BLACK);
-  square[3][7].setPieceAndColor(REINA, BLACK);
-  square[4][7].setPieceAndColor(REY, BLACK);
-  square[5][7].setPieceAndColor(ALFIL, BLACK);
-  square[6][7].setPieceAndColor(CABALLO, BLACK);
-  square[7][7].setPieceAndColor(TORRE, BLACK);
-
-  for (int i = 0; i < 8; i++)
-  {
-    square[i][1].setPieceAndColor(PEON, WHITE);
-    square[i][6].setPieceAndColor(PEON, BLACK);
-  }
-
-  for (int i = 2; i < 6; i++)
-  {
-    for (int j = 0; j < 8; j++)
-      square[j][i].setPieceAndColor(EMPTY, NONE);
-  }
-
   // ESTABLECE LAS COORDENADAS X E Y DE CADA SQUARE, ETC
   for (int i = 0; i < 8; i++)
-    for (int j = 0; j < 8; j++)
+  {
+    for (int j = 0; j < 12; j++) // Cambiar de <= 12 a < 12
     {
       square[i][j].setX(i);
       square[i][j].setY(j);
     }
+  }
 
+  // ESTABLECE LOS VALORES DE LOS PEONES
+  for (int i = 0; i < 8; i++)
+  {
+    square[i][9].setPieceAndColor(PAWN, BLACK); // Peones blancos en la fila 9
+    square[i][4].setPieceAndColor(PAWN, WHITE); // Peones negros en la fila 4
+  }
+
+  square[0][10].setPieceAndColor(ROOK, BLACK);
+  square[1][10].setPieceAndColor(KNIGHT, BLACK);
+  square[2][10].setPieceAndColor(BISHOP, BLACK);
+  square[3][10].setPieceAndColor(QUEEN, BLACK);
+  square[4][10].setPieceAndColor(KING, BLACK);
+  square[5][10].setPieceAndColor(BISHOP, BLACK);
+  square[6][10].setPieceAndColor(KNIGHT, BLACK);
+  square[7][10].setPieceAndColor(ROOK, BLACK);
+
+  square[0][3].setPieceAndColor(ROOK, WHITE);
+  square[1][3].setPieceAndColor(KNIGHT, WHITE);
+  square[2][3].setPieceAndColor(BISHOP, WHITE);
+  square[3][3].setPieceAndColor(QUEEN, WHITE);
+  square[4][3].setPieceAndColor(KING, WHITE);
+  square[5][3].setPieceAndColor(BISHOP, WHITE);
+  square[6][3].setPieceAndColor(KNIGHT, WHITE);
+  square[7][3].setPieceAndColor(ROOK, WHITE);
+
+  // Rellenar el resto de las filas con espacios vacíos
+  for (int i = 0; i < 12; i++)  // Cambiar de <= 12 a < 12
+  {
+    for (int j = 0; j < 8; j++)
+    {
+      if (i != 9 && i != 4 && i != 3 && i != 10) // Evitar las filas con piezas
+        square[j][i].setPieceAndColor(EMPTY, NONE);
+      else
+        square[j][i].setPieceAndColor(EMPTY, NONE); // Establecer como EMPTY NONE en las filas con piezas
+    }
+  }
 }
+
 
 // -------- funcion moveKing
 bool Board::moveKing(Square* thisKing, Square* thatSpace) {
@@ -451,4 +459,19 @@ bool Board::makeMove(int x1, int y1, int x2, int y2) {
       break;
   }
   return false;
+}
+
+//-------- funcion fichas muertas
+void Board::piezasMuertas()
+{
+  if (turn = BLACK)
+  {
+    // mover la ficha muerta al WHITE
+    //CASE FICHA
+  }
+  else if (turn = WHITE)
+  {
+    // mover la ficha muerta al BLACK
+    //CASE FICHA
+  }
 }

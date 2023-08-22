@@ -29,7 +29,7 @@ public:
 
 class Board
 {
-  Square square[8][8];
+  Square square[8][12];
   Color turn = WHITE;
   bool moveKing(Square* thisKing, Square* thatSpace);
   bool moveQueen(Square* thisQueen, Square* thatSpace);
