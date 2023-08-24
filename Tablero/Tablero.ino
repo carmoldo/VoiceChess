@@ -1,6 +1,9 @@
 //#include "C:\Users\47696443\Desktop\VoiceChess\Definitions\Definitions.h"
 //#include <iostream>
 //#include <string>
+
+//PRUEBA PRUEBA
+
 using namespace std;
 
 // -------- estructura comando
