@@ -1,10 +1,24 @@
-//#include "C:\Users\47696443\Desktop\VoiceChess\Definitions\Definitions.h"
-//#include <iostream>
-//#include <string>
-
-//PRUEBA PRUEBA
-
+#include "C:\Users\47696443\Desktop\VoiceChess\Definitions\Definitions.h"
+#include <iostream>
+#include <string>
 using namespace std;
+
+/*
+  Aquí tienes una lista de las funciones en orden de activación:
+  1. `Square::Square()`
+  2. `Square::setSpace(Square* space)`
+  3. `Square::getPiece()`
+  4. `Square::getColor()`
+  5. `Square::setEmpty()`
+  6. `Square::setPieceAndColor(Piece p, Color c)`
+  7. `Board::setBoard()`
+  8. `Board::movePieza`
+  15. `Board::doMove()`
+  16. `Board::piezasMuertas()`
+  17. `MovimientoFicha()`
+  18. `MovimientoFichaMuerta()`
+*/
+
 
 // -------- estructura comando
 struct Comando {
@@ -135,6 +149,17 @@ void Board::setBoard()
     }
   }
 
+  // Rellenar el resto de las filas con espacios vacíos
+  for (int i = 0; i < 12; i++)
+  {
+    for (int j = 0; j < 8; j++)
+    {
+      square[j][i].setPieceAndColor(EMPTY, NONE);
+      square[j][i].muerta = false; // Inicializa la variable "muerta" como false
+    }
+  }
+
+
   // ESTABLECE LOS VALORES DE LOS PEONES
   for (int i = 0; i < 8; i++)
   {
@@ -159,18 +184,7 @@ void Board::setBoard()
   square[5][3].setPieceAndColor(BISHOP, WHITE);
   square[6][3].setPieceAndColor(KNIGHT, WHITE);
   square[7][3].setPieceAndColor(ROOK, WHITE);
-
-  // Rellenar el resto de las filas con espacios vacíos
-  for (int i = 0; i < 12; i++)  // Cambiar de <= 12 a < 12
-  {
-    for (int j = 0; j < 8; j++)
-    {
-      if (i != 9 && i != 4 && i != 3 && i != 10) // Evitar las filas con piezas
-        square[j][i].setPieceAndColor(EMPTY, NONE);
-      else
-        square[j][i].setPieceAndColor(EMPTY, NONE); // Establecer como EMPTY NONE en las filas con piezas
-    }
-  }
+}
 }
 
 
@@ -467,14 +481,30 @@ bool Board::makeMove(int x1, int y1, int x2, int y2) {
 //-------- funcion fichas muertas
 void Board::piezasMuertas()
 {
-  if (turn = BLACK)
-  {
-    // mover la ficha muerta al WHITE
-    //CASE FICHA
-  }
-  else if (turn = WHITE)
-  {
-    // mover la ficha muerta al BLACK
-    //CASE FICHA
+  // Recorre todos los cuadrados en el tablero 8x12
+  for (int i = 0; i < 8; i++) {
+    for (int j = 0; j < 12; j++) {
+      if (square[i][j].muerta) { //If ficha == muerta, verifica el tipo de pieza y su color
+        Piece pieceType = square[i][j].getPiece();
+        Color pieceColor = square[i][j].getColor();
+
+        // Que hacer dependiendo que ficha es muerta
+        switch (pieceType) {
+          case ROOK:
+            if (pieceColor == WHITE) {
+              square[i][j].setPieceAndColor(EMPTY, NONE);
+              square[2][4].setPieceAndColor(ROOK, WHITE);
+            } else if (pieceColor == BLACK) {
+              square[i][j].setPieceAndColor(EMPTY, NONE);
+              square[3][5].setPieceAndColor(ROOK, BLACK);
+            }
+            break;
+          // Agregar más casos
+        }
+
+        // Poner muerta como true en el square viejo de la ficha muerta
+        square[i][j].muerta = false;
+      }
+    }
   }
 }

@@ -1,5 +1,4 @@
 #pragma once
-
 #include <iostream>
 #include <cmath>
 #include <string>
@@ -10,6 +9,7 @@ enum Color { WHITE, BLACK, NONE };
 
 class Square
 {
+  bool muerta;
   Piece piece;
   Color color;
   int x, y;
