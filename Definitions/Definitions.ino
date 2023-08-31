@@ -1,7 +1,4 @@
 #pragma once
-#include <iostream>
-#include <cmath>
-#include <string>
 #include <Arduino.h> // Agrega la biblioteca de Arduino
 
 enum Piece { KING, QUEEN, BISHOP, KNIGHT, ROOK, PAWN, EMPTY };
@@ -38,7 +35,6 @@ class Board
   bool moveRook(Square* thisRook, Square* thatSpace);
   bool movePawn(Square* thisPawn, Square* thatSpace);
   bool makeMove(int x1, int y1, int x2, int y2);
-//  void printBoard();
 
 public:
   Square* getSquare(int x, int y);

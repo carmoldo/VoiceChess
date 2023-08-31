@@ -1,7 +1,4 @@
 #include "C:\Users\47696443\Desktop\VoiceChess\Definitions\Definitions.h"
-#include <iostream>
-#include <string>
-using namespace std;
 
 /*
   Aquí tienes una lista de las funciones en orden de activación:
