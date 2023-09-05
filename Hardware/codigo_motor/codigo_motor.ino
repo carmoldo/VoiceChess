@@ -7,15 +7,24 @@ void setup() {
 }
 
 void loop() {
-  //enciende el motor
-  digitalWrite(5, HIGH);
-  //para un motor de 0.9° se usasn 200 pasos para girar 180°, para un motor de 1.8° se usan 100
-  for(int i = 0; i < 200; i++){
-    //gira para un lado
+  //gira para la derecha
+ digitalWrite(5, HIGH);
+  //da una vuelta entera usando 200
+  for(int i = 0; i < 201; i++){
     digitalWrite(4, HIGH);
-    delay(10);
-    //gira para el otro
+    Serial.println( i);
+    delay(20);
     digitalWrite(4, LOW);
-    delay(10);
+    delay(20);
+  }
+
+  //gira para la izquierda
+  digitalWrite(5, LOW);
+  for(int i = 0; i < 201; i++){
+    digitalWrite(4, HIGH);
+    Serial.println( i);
+    delay(20);
+    digitalWrite(4, LOW);
+    delay(20);
   }
 }
