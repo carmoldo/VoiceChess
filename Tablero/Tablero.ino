@@ -1,7 +1,6 @@
 #include "C:\Users\47696443\Desktop\VoiceChess\Definitions\Definitions.h"
-
 /*
-  Aquí tienes una lista de las funciones en orden de activación:
+  LISTA DE FUNCIONES: (En orden de activación):
   1. `Square::Square()`
   2. `Square::setSpace(Square* space)`
   3. `Square::getPiece()`
@@ -14,8 +13,19 @@
   16. `Board::piezasMuertas()`
   17. `MovimientoFicha()`
   18. `MovimientoFichaMuerta()`
-*/
 
+primero se deberia de crear el tablero con 12x8
+LISTO
+
+Luego se deberia de comprobar que el comando este bien
+LISTO
+
+se comprueba si al hacer el mov. se muere una ficha. si  se muere una ficha, llevar el electro iman a la ficha muerta y luego a su lugar de muerta
+FALTA
+
+luego de llevar la ficha muerta, poner la otra ficha en su lugar.
+FALTA 
+*/
 
 // -------- estructura comando
 struct Comando {
@@ -28,41 +38,37 @@ struct Comando {
 };
 
 // -------- estructura square
-Square::Square()
-{
+Square::Square(){
   piece = EMPTY;
   color = NONE;
 }
 
 // -------- funcion setSpace de Square
-void Square::setSpace(Square* space)
-{
+void Square::setSpace(Square* space){
   // ESTA FUNCION SE USA CUANDO QUIERO PASAR EL VALOR DEL COLOR Y LA PIECE A OTRA CASILLA
   color = space->getColor(); // Copia el color del objeto 'space' al color de esta instancia
   piece = space->getPiece(); // Copia la pieza del objeto 'space' a la pieza de esta instancia
 }
 
-// -------- funcion gePiece de Piece Square
-Piece Square::getPiece()
-{
+// -------- funcion getPiece de Piece Square
+Piece Square::getPiece(){
   // COPIA EL VALOR COLOR Y PIECE DE SPACE AL DE ESTA INSTANCIA
   return piece;
 }
+
+// -------- funcion getColor
 Color Square::getColor() {
   return color;
 }
 
 // -------- funcion setEmpty de Square
-void Square::setEmpty()
-{
+void Square::setEmpty(){
   color = NONE;
   piece = EMPTY;
 }
 
-
 // -------- funcion setSPieceAndColor
-void Square::setPieceAndColor(Piece p, Color c)
-{
+void Square::setPieceAndColor(Piece p, Color c){
   piece = p;
   color = c;
 }
@@ -97,7 +103,7 @@ bool Board::doMove() {
     }
     else
     {
-      return doMove;
+      return;
       // ACA ES CUANDO GETCOLOR() == TURN ESTA MAL, OSEA ESTAS AGARRAN UNA PIECE NO TUYA
     }
   }
@@ -134,8 +140,7 @@ bool Board::doMove() {
 }
 
 // -------- funcion setBoard
-void Board::setBoard()
-{
+void Board::setBoard(){
   // ESTABLECE LAS COORDENADAS X E Y DE CADA SQUARE, ETC
   for (int i = 0; i < 8; i++)
   {
@@ -147,23 +152,19 @@ void Board::setBoard()
   }
 
   // Rellenar el resto de las filas con espacios vacíos
-  for (int i = 0; i < 12; i++)
-  {
-    for (int j = 0; j < 8; j++)
-    {
+  for (int i = 0; i < 12; i++){
+    for (int j = 0; j < 8; j++){
       square[j][i].setPieceAndColor(EMPTY, NONE);
       square[j][i].muerta = false; // Inicializa la variable "muerta" como false
     }
   }
 
-
   // ESTABLECE LOS VALORES DE LOS PEONES
-  for (int i = 0; i < 8; i++)
-  {
+  for (int i = 0; i < 8; i++){
     square[i][9].setPieceAndColor(PAWN, BLACK); // Peones blancos en la fila 9
     square[i][4].setPieceAndColor(PAWN, WHITE); // Peones negros en la fila 4
   }
-
+  
   square[0][10].setPieceAndColor(ROOK, BLACK);
   square[1][10].setPieceAndColor(KNIGHT, BLACK);
   square[2][10].setPieceAndColor(BISHOP, BLACK);
@@ -181,7 +182,6 @@ void Board::setBoard()
   square[5][3].setPieceAndColor(BISHOP, WHITE);
   square[6][3].setPieceAndColor(KNIGHT, WHITE);
   square[7][3].setPieceAndColor(ROOK, WHITE);
-}
 }
 
 
@@ -329,8 +329,7 @@ bool Board::moveKnight(Square* thisKnight, Square* thatSpace)
 }
 
 // -------- funcion moveRook
-bool Board::moveRook(Square* thisRook, Square* thatSpace)
-{
+bool Board::moveRook(Square* thisRook, Square* thatSpace){
   //off board inputs should be handled elsewhere (before this)
   //squares with same color should be handled elsewhere (before this)
   int rookX = thisRook->getX();
@@ -476,8 +475,7 @@ bool Board::makeMove(int x1, int y1, int x2, int y2) {
 }
 
 //-------- funcion fichas muertas
-void Board::piezasMuertas()
-{
+void Board::piezasMuertas(){
   // Recorre todos los cuadrados en el tablero 8x12
   for (int i = 0; i < 8; i++) {
     for (int j = 0; j < 12; j++) {
@@ -496,7 +494,7 @@ void Board::piezasMuertas()
               square[3][5].setPieceAndColor(ROOK, BLACK);
             }
             break;
-          // Agregar más casos
+            // Agregar más casos
         }
 
         // Poner muerta como true en el square viejo de la ficha muerta
@@ -504,4 +502,16 @@ void Board::piezasMuertas()
       }
     }
   }
+}
+
+MovimientoFicha() {
+  int i;
+  //MoverArriba();
+  //MoverAbajo();
+  //MoverDerecha();
+  //MoverIzquierda();
+  //MoverDiagonalArribaDerecha();
+  //MoverDiagonalArribaIzquierda();
+  //MoverDiagonalAbajoDerecha();
+  //MoverDiagonalAbajoIzquierda();
 }
