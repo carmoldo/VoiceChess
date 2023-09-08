@@ -13,7 +13,7 @@
   16. `Board::piezasMuertas()`
   17. `MovimientoFicha()`
   18. `MovimientoFichaMuerta()`
-
+  
 primero se deberia de crear el tablero con 12x8
 LISTO
 
@@ -140,48 +140,49 @@ bool Board::doMove() {
 }
 
 // -------- funcion setBoard
-void Board::setBoard(){
-  // ESTABLECE LAS COORDENADAS X E Y DE CADA SQUARE, ETC
-  for (int i = 0; i < 8; i++)
-  {
-    for (int j = 0; j < 12; j++) // Cambiar de <= 12 a < 12
-    {
-      square[i][j].setX(i);
-      square[i][j].setY(j);
-    }
-  }
-
-  // Rellenar el resto de las filas con espacios vacíos
-  for (int i = 0; i < 12; i++){
-    for (int j = 0; j < 8; j++){
-      square[j][i].setPieceAndColor(EMPTY, NONE);
-      square[j][i].muerta = false; // Inicializa la variable "muerta" como false
-    }
-  }
-
-  // ESTABLECE LOS VALORES DE LOS PEONES
-  for (int i = 0; i < 8; i++){
-    square[i][9].setPieceAndColor(PAWN, BLACK); // Peones blancos en la fila 9
-    square[i][4].setPieceAndColor(PAWN, WHITE); // Peones negros en la fila 4
-  }
+void Board::setBoard()
+{
   
-  square[0][10].setPieceAndColor(ROOK, BLACK);
-  square[1][10].setPieceAndColor(KNIGHT, BLACK);
-  square[2][10].setPieceAndColor(BISHOP, BLACK);
-  square[3][10].setPieceAndColor(QUEEN, BLACK);
-  square[4][10].setPieceAndColor(KING, BLACK);
-  square[5][10].setPieceAndColor(BISHOP, BLACK);
-  square[6][10].setPieceAndColor(KNIGHT, BLACK);
-  square[7][10].setPieceAndColor(ROOK, BLACK);
+    for (int i = 0; i < 8; i++)
+        for (int j = 0; j < 12; j++)
+        {
+            square[i][j].setX(i);
+            square[i][j].setY(j);
+        }
 
-  square[0][3].setPieceAndColor(ROOK, WHITE);
-  square[1][3].setPieceAndColor(KNIGHT, WHITE);
-  square[2][3].setPieceAndColor(BISHOP, WHITE);
-  square[3][3].setPieceAndColor(QUEEN, WHITE);
-  square[4][3].setPieceAndColor(KING, WHITE);
-  square[5][3].setPieceAndColor(BISHOP, WHITE);
-  square[6][3].setPieceAndColor(KNIGHT, WHITE);
-  square[7][3].setPieceAndColor(ROOK, WHITE);
+      for (int i = 0; i < 11; i++)
+    {
+        for (int j = 0; j < 11; j++)
+        {
+            if (square[j][i].getPiece() == EMPTY)
+                square[j][i].setPieceAndColor(EMPTY, NONE);
+        }
+    }
+
+  
+    for (int i = 0; i < 8; i++)
+    {
+        square[i][3].setPieceAndColor(PAWN, WHITE);
+        square[i][8].setPieceAndColor(PAWN, BLACK);
+    }
+
+    square[0][2].setPieceAndColor(ROOK, WHITE);
+    square[1][2].setPieceAndColor(KNIGHT, WHITE);
+    square[2][2].setPieceAndColor(BISHOP, WHITE);
+    square[3][2].setPieceAndColor(QUEEN, WHITE);
+    square[4][2].setPieceAndColor(KING, WHITE);
+    square[5][2].setPieceAndColor(BISHOP, WHITE);
+    square[6][2].setPieceAndColor(KNIGHT, WHITE);
+    square[7][2].setPieceAndColor(ROOK, WHITE);
+
+    square[0][9].setPieceAndColor(ROOK, BLACK);
+    square[1][9].setPieceAndColor(KNIGHT, BLACK);
+    square[2][9].setPieceAndColor(BISHOP, BLACK);
+    square[3][9].setPieceAndColor(QUEEN, BLACK);
+    square[4][9].setPieceAndColor(KING, BLACK);
+    square[5][9].setPieceAndColor(BISHOP, BLACK);
+    square[6][9].setPieceAndColor(KNIGHT, BLACK);
+    square[7][9].setPieceAndColor(ROOK, BLACK);
 }
 
 
