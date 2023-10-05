@@ -1,55 +1,56 @@
 #define dly 10
+#define stepONE 4
+#define outputONE 5
+#define stepTWO 27
+#define outputTWO 14
+#define pasos 201
 
 void setup() {
- //seteo los pines de output
- //STEP 1
- pinMode(4, OUTPUT);
- //DIR 1
- pinMode(5, OUTPUT);
+ //PRIMER MOTOR
+ pinMode(stepONE, OUTPUT);
+ pinMode(outputONE, OUTPUT);
 
- //STEP 2
- pinMode(27, OUTPUT);
- //DIR 2
- pinMode(14, OUTPUT);
+ //SEGUNDO MOTOR
+ pinMode(stepTWO, OUTPUT);
+ pinMode(outputTWO, OUTPUT);
 }
 
 void loop() {
   //gira para la derecha (1)
- digitalWrite(5, HIGH);
+ digitalWrite(outputONE, HIGH);
   //da una vuelta entera usando 200
-  for(int i = 0; i < 201; i++){
-    digitalWrite(4, HIGH);
+  for(int i = 0; i < pasos; i++){
+    digitalWrite(stepONE, HIGH);
     delay(dly);
-    digitalWrite(4, LOW);
+    digitalWrite(stepONE, LOW);
     delay(dly);
   }
 
   //gira para la izquierda (1)
-  digitalWrite(5, LOW);
-  for(int i = 0; i < 201; i++){
-    digitalWrite(4, HIGH);
+  digitalWrite(outputONE, LOW);
+  for(int i = 0; i < pasos; i++){
+    digitalWrite(stepONE, HIGH);
     delay(dly);
-    digitalWrite(4, LOW);
+    digitalWrite(stepONE, LOW);
     delay(dly);
   }
 
 
   //gira para la derecha (2)
- digitalWrite(14, HIGH);
+ digitalWrite(outputTWO, HIGH);
   //da una vuelta entera usando 200
-  for(int i = 0; i < 201; i++){
-    digitalWrite(27, HIGH);
+  for(int i = 0; i < pasos; i++){
+    digitalWrite(stepTWO, HIGH);
     delay(dly);
-    digitalWrite(27, LOW);
+    digitalWrite(stepTWO, LOW);
     delay(dly);
   }
-
   //gira para la izquierda (2)
-  digitalWrite(14, LOW);
-  for(int i = 0; i < 201; i++){
-    digitalWrite(27, HIGH);
+  digitalWrite(outputTWO, LOW);
+  for(int i = 0; i < pasos; i++){
+    digitalWrite(stepTWO, HIGH);
     delay(dly);
-    digitalWrite(27, LOW);
+    digitalWrite(stepTWO, LOW);
     delay(dly);
   }
 }
