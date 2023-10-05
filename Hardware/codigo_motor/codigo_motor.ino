@@ -1,3 +1,5 @@
+#define dly 20
+
 void setup() {
  //seteo los pines de output
  //STEP
@@ -13,9 +15,9 @@ void loop() {
   for(int i = 0; i < 201; i++){
     digitalWrite(4, HIGH);
     Serial.println( i);
-    delay(20);
+    delay(dly);
     digitalWrite(4, LOW);
-    delay(20);
+    delay(dly);
   }
 
   //gira para la izquierda
@@ -23,8 +25,8 @@ void loop() {
   for(int i = 0; i < 201; i++){
     digitalWrite(4, HIGH);
     Serial.println( i);
-    delay(20);
+    delay(dly);
     digitalWrite(4, LOW);
-    delay(20);
+    delay(dly);
   }
 }
