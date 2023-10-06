@@ -9,47 +9,33 @@ void setup() {
  //PRIMER MOTOR
  pinMode(stepONE, OUTPUT);
  pinMode(outputONE, OUTPUT);
-
  //SEGUNDO MOTOR
  pinMode(stepTWO, OUTPUT);
  pinMode(outputTWO, OUTPUT);
 }
 
 void loop() {
-  //gira para la derecha (1)
+  //gira para la derecha
  digitalWrite(outputONE, HIGH);
-  //da una vuelta entera usando 200
-  for(int i = 0; i < pasos; i++){
-    digitalWrite(stepONE, HIGH);
-    delay(dly);
-    digitalWrite(stepONE, LOW);
-    delay(dly);
-  }
-
-  //gira para la izquierda (1)
-  digitalWrite(outputONE, LOW);
-  for(int i = 0; i < pasos; i++){
-    digitalWrite(stepONE, HIGH);
-    delay(dly);
-    digitalWrite(stepONE, LOW);
-    delay(dly);
-  }
-
-
-  //gira para la derecha (2)
  digitalWrite(outputTWO, HIGH);
   //da una vuelta entera usando 200
   for(int i = 0; i < pasos; i++){
+    digitalWrite(stepONE, HIGH);
     digitalWrite(stepTWO, HIGH);
     delay(dly);
+    digitalWrite(stepONE, LOW);
     digitalWrite(stepTWO, LOW);
     delay(dly);
   }
-  //gira para la izquierda (2)
+
+  //gira para la izquierda
+  digitalWrite(outputONE, LOW);
   digitalWrite(outputTWO, LOW);
   for(int i = 0; i < pasos; i++){
+    digitalWrite(stepONE, HIGH);
     digitalWrite(stepTWO, HIGH);
     delay(dly);
+    digitalWrite(stepONE, LOW);
     digitalWrite(stepTWO, LOW);
     delay(dly);
   }
