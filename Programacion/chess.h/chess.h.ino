@@ -1,71 +1,6 @@
-// ARCHIVO DEFINITIONS.h
-#pragma once
-using namespace std;
-#include <iostream>
-#include <cmath>
-#include <string>
-
-enum Piece { KING, QUEEN, BISHOP, KNIGHT, ROOK, PAWN, EMPTY };
-enum Color { WHITE, BLACK, NONE };
-
-class Square
-{
-	Piece piece;
-	Color color;
-  bool mano;
-	int x, y;
-
-public:
-void setMano(bool value) { mano = value; } 
-// Método público para establecer 'mano'
-bool getMano() const { return mano; } 
-// Método público para obtener el valor de 'mano'
-
-	void setSpace(Square*);
-	void setEmpty();
-	void setPieceAndColor(Piece, Color);
-	Piece getPiece();
-	Color getColor();
-	void setX(int ex) { x = ex; }
-	void setY(int why) { y = why; }
-	int getX() { return x; }
-	int getY() { return y; }
-	Square();
-};
-
-class Board
-{
-	Square square[8][12];
-	Color turn=WHITE;
-	bool moveKing(Square* thisKing, Square* thatSpace);
-	bool moveQueen(Square* thisQueen, Square* thatSpace);
-	bool moveBishop(Square* thisBishop, Square* thatSpace);
-	bool moveKnight(Square* thisKnight, Square* thatSpace);
-	bool moveRook(Square* thisRook, Square* thatSpace);
-	bool movePawn(Square* thisPawn, Square* thatSpace);
-	bool makeMove(int x1, int y1, int x2, int y2);
-	void printBoard();
-public:
-
-void MovimientoIRL(Square* src, Square* dest);
-
-void setFichasMuertas(Square* src, Square* dest);
-	Square* getSquare(int x, int y) {
-		return &square[x][y];
-	}
-	void setSquare(Square * s, int x, int y){
-		square[x][y]=*s;
-	}
-	bool doMove();
-	
-	void setBoard();
-  bool playGame();
-};
-
-
-
 
 // ARCHIVO CHESS.H
+#include "definitions.cpp"
 
 // -------- estructura square
 Square::Square() {
@@ -114,28 +49,28 @@ void Board::printBoard() {
       Piece p = square[i][j].getPiece();
       Color c = square[i][j].getColor();
 
-			switch (p)
-			{
-			case KING: (c == WHITE) ? cout << " K " : cout << " k ";
-				break;
-			case QUEEN: (c == WHITE) ? cout << " Q " : cout << " q ";
-				break;
-			case BISHOP:(c == WHITE) ? cout << " B " : cout << " b ";
-				break;
-			case KNIGHT:(c == WHITE) ? cout << " H " : cout << " h ";
-				break;
-			case ROOK: (c == WHITE) ? cout << " R " : cout << " r ";
-				break;
-			case PAWN: (c == WHITE) ? cout << " P " : cout << " p ";
-				break;
-			case EMPTY: cout << " " << "\21" << " ";
-				break;
-			default: cout << "XXX";
-				break;
-			}
+      switch (p)
+      {
+      case KING: (c == WHITE) ? cout << " K " : cout << " k ";
+        break;
+      case QUEEN: (c == WHITE) ? cout << " Q " : cout << " q ";
+        break;
+      case BISHOP:(c == WHITE) ? cout << " B " : cout << " b ";
+        break;
+      case KNIGHT:(c == WHITE) ? cout << " H " : cout << " h ";
+        break;
+      case ROOK: (c == WHITE) ? cout << " R " : cout << " r ";
+        break;
+      case PAWN: (c == WHITE) ? cout << " P " : cout << " p ";
+        break;
+      case EMPTY: cout << " " << "\21" << " ";
+        break;
+      default: cout << "XXX";
+        break;
+      }
 
-		}
-		cout << endl;
+    }
+    cout << endl;
   }
 }
 
@@ -260,14 +195,14 @@ bool Board:: moveKing(Square* thisKing, Square* thatSpace)
   // la casilla 'thatSpace'. Comprueba si la diferencia absoluta en las
   // coordenadas X y Y entre thatSpace y thisKing es igual a 1
   if (abs(thatSpace->getX() - thisKing->getX()) == 1)
-		if (abs(thatSpace->getY() - thisKing->getY()) == 1)
-		{
-			thatSpace->setSpace(thisKing);
-			thisKing->setEmpty();
-			return true;
-		}
+    if (abs(thatSpace->getY() - thisKing->getY()) == 1)
+    {
+      thatSpace->setSpace(thisKing);
+      thisKing->setEmpty();
+      return true;
+    }
   else return false;
-	else return false;
+  else return false;
 }
 
 //----- funcion moveQueen
@@ -618,25 +553,3 @@ void Board::MovimientoIRL(Square *src, Square *dest){
   }
 }
 */
-
-
-//ARCHIVO PLAYGAME
-int main()
-{
-	Board b;
-	string s;
-	bool newgame = true;
-	cout << "Enter any key to continue" << endl;
-	cin >> s;
-
-	while(newgame){
-		b.setBoard();
-		while (b.playGame());
-		cout << "Do you want to play again? (y for yes, anything else for no) ";
-		cin >> s;
-		if (s != "y")
-			newgame = false;
-	}
-  
-	return 0;
-}
