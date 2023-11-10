@@ -1,17 +1,25 @@
+// ARCHIVO DEFINITIONS
 #pragma once
-#include <Arduino.h> // Agrega la biblioteca de Arduino
+#include <iostream>
+#include <cmath>
+#include <string>
 
 enum Piece { KING, QUEEN, BISHOP, KNIGHT, ROOK, PAWN, EMPTY };
 enum Color { WHITE, BLACK, NONE };
 
 class Square
 {
-  bool muerta;
   Piece piece;
   Color color;
+  bool mano;
   int x, y;
 
 public:
+void setMano(bool value) { mano = value; } 
+// Método público para establecer 'mano'
+bool getMano() const { return mano; } 
+// Método público para obtener el valor de 'mano'
+
   void setSpace(Square*);
   void setEmpty();
   void setPieceAndColor(Piece, Color);
@@ -27,7 +35,7 @@ public:
 class Board
 {
   Square square[8][12];
-  Color turn = WHITE;
+  Color turn=WHITE;
   bool moveKing(Square* thisKing, Square* thatSpace);
   bool moveQueen(Square* thisQueen, Square* thatSpace);
   bool moveBishop(Square* thisBishop, Square* thatSpace);
@@ -35,11 +43,20 @@ class Board
   bool moveRook(Square* thisRook, Square* thatSpace);
   bool movePawn(Square* thisPawn, Square* thatSpace);
   bool makeMove(int x1, int y1, int x2, int y2);
-
+  void printBoard();
 public:
-  Square* getSquare(int x, int y);
-  void setSquare(Square* s, int x, int y);
+
+void MovimientoIRL(Square* src, Square* dest);
+
+void setFichasMuertas(Square* src, Square* dest);
+  Square* getSquare(int x, int y) {
+    return &square[x][y];
+  }
+  void setSquare(Square * s, int x, int y){
+    square[x][y]=*s;
+  }
   bool doMove();
+  
   void setBoard();
   bool playGame();
 };
